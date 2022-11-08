@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Genshin Impact Database</title>
+</head>
+<style>
+    table {
+        border-collapse: collapse;
+        border: 2px solid #000;
+    }
+    th {
+    	background-color: deepskyblue;
+        width: auto;
+        text-align: center;
+        vertical-align: middle;
+        border: 2px solid #000;
+        border-collapse: collapse;
+        padding: 0.3em;
+    }
+    td {
+        width: auto;
+        text-align: center;
+        vertical-align: middle;
+        border: 1px solid #000;
+        border-collapse: collapse;
+        padding: 0.3em;
+        border-left: 2px black;
+        border-style: solid;
+        vertical-align: top;
+    }
+    header {
+        margin-top: -10px;
+        margin-left: -10px;
+        margin-right: -10px;
+        background-color: mediumslateblue;
+        padding-bottom: 20px;
+        padding-top: 20px;
+    }
+    .row {
+    	border: 2px solid #000;
+    	border-collapse: collapse;
+    }
+</style>
+<body style="background-color: lightskyblue">
+	<header>
+    	<h1 style="text-align: center">Genshin Impact Database</h1>
+    </header>
+    <br>
+    <!-- Character Table -->
+    <table border="0" style="margin-left: auto; margin-right: auto">
+    	<tr>
+    		<td id="mariadb">
+    		<table style=vertical-align: top>
+                <div id: "header">
+                    <h2>Characters</h2>
+                </div>
+    			<tr>
+    				<th>Name</th>
+    				<th>Element</th>
+    				<th>Weapon</th>
+    				<th>Rarity</th>
+    				<th>Nation</th>
+    				<th>Ascension Stat</th>
+    				<th>Ascension<br>Stat Value</th>
+    				<th>Talent Book</th>
+    			</tr>
+    			{% for character in characters %}
+    			<tr>
+    				<td>{{character[2]}}</td> <!-- Name -->
+    				<td>{{character[3]}}</td> <!-- Element -->
+    				<td>{{character[4]}}</td> <!-- Weapon -->
+    				<td>{{character[0]}} star</td> <!-- Rarity -->
+    				<td>{{character[5]}}</td> <!-- Nation -->
+    				<td>{{character[1]}}</td> <!-- Ascension Stat -->
+    				<td>{{character[7]}}</td> <!-- Ascension Stat Value -->
+    				<td>{{character[6]}}</td> <!-- Talent Book -->
+    			</tr>
+    			{% endfor %}
+    			</table>
+            <!-- Form to let user filter characters by element and/or weapon -->
+    		<form method:GET style="text-align: center">
+    			<p>Element:
+    			<select name="element">
+    				<option value="all">All</option>
+    				{% for element in elements %} <!-- List all elements from database -->
+    				    <option value="{{element[0]}}">{{element[0]}}</option>
+    				{% endfor %}
+    			</select>
+    			Weapon:
+    			<select name="weapon">
+    				<option value="all">All</option>
+    				{% for weapon in weapons %} <!-- List all weapons from database -->
+    				    <option value="{{weapon[0]}}">{{weapon[0]}}</option>
+    				{% endfor %}
+    			</select>
+    			<input type="submit" value="Filter"></p>
+        	</form>
+            <!-- Redirects to Add Character page when clicked -->
+        	<p style="text-align: center"><a href="{{url_for('addCharacter')}}">Add character</a></p>
+        <td id="redis">
+        	<table style="margin-left: auto; margin-right: auto; max-width: 300px">
+        	<div id: "header">
+        	    <h2>Talent Book To-Do List</h2>
+        	</div>
+        	<tr>
+        	    <th>Day</th>
+        	    <th>Books</th>
+        	</tr>
+        	<tr>
+        	    <td>Monday</td>
+        	    <td>{% for book in monThurs %}
+        	        {{book}}, {% endfor %}</td>
+        	</tr>
+        	<tr>
+        	    <td>Tuesday</td>
+        		<td>{% for book in tuesFri %}
+        	        {{book}}, {% endfor %}</td>
+        	</tr>
+        	<tr>
+        	    <td>Wednesday</td>
+        	    <td>{% for book in wedSat %}
+        	        {{book}}, {% endfor %}</td>
+        	</tr>
+        	<tr>
+        	    <td>Thursday</td>
+        	    <td>{% for book in monThurs %}
+        	        {{book}}, {% endfor %}</td>
+        	</tr>
+        	<tr>
+        	    <td>Friday</td>
+        	    <td>{% for book in tuesFri %}
+        	        {{book}}, {% endfor %}</td>
+        	</tr>
+        	<tr>
+        	    <td>Saturday</td>
+        	    <td>{% for book in wedSat %}
+        	        {{book}}, {% endfor %}</td>
+        	</tr>
+        	<tr>
+        	    <td>Sunday</td>
+        	    <td>{% for book in sunday %}
+        	        {{book}}, {% endfor %}</td>
+        	    </tr>
+        	</table>
+        	<form method:"POST" style="text-align: center">
+        		<p>Book to add:
+        		<select name="addBook">
+        	    	{% for book in booksAdd %} <!-- Need to get this to show books NOT in list already -->
+        	        	<option value="{{book}}">{{book}}</option>
+        	    	{% endfor %}
+        		</select>
+        		<input type="submit" value="Add book"></p>
+        	</form>
+        	<form method:"POST" style="text-align: center">
+        		<p>Book to remove:
+        		<select name="removeBook">
+        			{% for book in booksRemove %} <!-- Need to get this show show ONLY books in list -->
+        				<option value="{{book}}">{{book}}</option>
+        			{% endfor %}
+        		</select>
+        		<input type="submit" value="Remove book"></p>
+        	</form>
+        	<br>
+
+            <table style="margin-left: auto; margin-right: auto">
+                <div id: "header">
+                    <h2>Character Talent Books</h2>
+                </div>
+                <tr>
+                    <th>Nation</th>
+                    <th>Talent Book</th>
+                    <th>Days</th>
+                </tr>
+                </tr>
+                {% for days, books in mondstadt.items() %}
+                `   <tr>
+                    <td>Mondstadt</td>
+                    <td>{{books}}</td>
+                    <td>{{days}}</td>
+                </tr>
+                {% endfor %}
+                {% for days, books in liyue.items() %}
+                <tr>
+                    <td>Liyue</td>
+                    <td>{{books}}</td>
+                    <td>{{days}}</td>
+                </tr>
+                {% endfor %}
+                {% for days, books in inazuma.items() %}
+                <tr>
+                     <td>Inazuma</td>
+                     <td>{{books}}</td>
+                     <td>{{days}}</td>
+                </tr>
+                {% endfor %}
+                {% for days, books in sumeru.items() %}
+                <tr>
+                <td>Sumeru</td>
+                <td>{{books}}</td>
+                <td>{{days}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </td>
+        </tr>
+        <tr class="row">
+        	<td id="homework8">
+        	</td>
+        	<td id="homework9">
+        	</td>
+        </tr>
+    </table>
+</body>
+</html>

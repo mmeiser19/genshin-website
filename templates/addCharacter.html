@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add character</title>
+</head>
+<style>
+	header {
+	  	margin-top: -10px;
+	    margin-left: -10px;
+	    margin-right: -10px;
+	    background-color: mediumslateblue;
+	    padding-bottom: 20px;
+	    padding-top: 20px;
+	}
+</style>
+<body style="background-color: lightskyblue">
+	<header>
+	    <h1 style="text-align: center">Genshin Impact Database</h1>
+	</header>
+    <br>
+    <!-- Message to display when page is reloaded if the character being added already exists -->
+    <h2 style="color:red; text-align: center">{{msg}}</h2>
+    <div id: "header">
+        <h2 style="text-align: center">Add New Character</h2>
+    </div>
+    <table border="0" style="margin-left: auto; margin-right: auto">
+    <!-- Form to add a new character -->
+    <form method="POST">
+        <tr>
+            <td>Name:</td>
+            <td><input type="text" name="name"></td>
+        </tr>
+        <tr>
+            <td>Nation:</td>
+            <td><input type="text" name="nation"></td>
+        </tr>
+        <tr>
+            <td>Element:</td>
+            <td><select name="element">
+            {% for element in elements %}
+            	<option value="{{element[0]}}">{{element[0]}}</option>
+            {% endfor %}</select>
+            </td>
+        </tr>
+        <tr>
+            <td>Weapon:</td>
+            <td><select name="weapon">
+            {% for weapon in weapons %}
+            	<option value="{{weapon[0]}}">{{weapon[0]}}</option>
+            {% endfor %}</select>
+            </td>
+        </tr>
+        <tr>
+            <td>Rarity:</td>
+            <td><select name="rarity">
+            {% for rarity in rarities %}
+            	<option value="{{rarity[0]}}">{{rarity[0]}}</option>
+            {% endfor %}</select>
+            </td>
+        </tr>
+        <tr>
+            <td>Ascension stat:</td>
+            <td><select name="stat">
+            {% for stat in stats %}
+                <option value="{{stat[0]}}">{{stat[0]}}</option>
+            {% endfor %}</select>
+            </td>
+        </tr>
+        <tr>
+            <td>Talent Book:</td>
+            <td><select name="talentBook">
+            {% for talentBook in talentBooks %}
+                <option value="{{talentBook[0]}}">{{talentBook[0]}}</option>
+            {% endfor %}</select>
+            </td>
+        </tr>
+        <tr>
+            <!-- Submit button to add character to database -->
+            <td colspan="2" style="text-align: center">
+            <input type="submit" value="Add Character">
+        </tr>
+    </form>
+    </table>
+</body>
+</html>
