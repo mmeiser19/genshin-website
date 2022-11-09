@@ -1,6 +1,9 @@
 {
   "element": "Pyro",
-  "resonance": "Affected by Cryo for 40% less time. Increases ATK by 25%",
+  "resonance": {
+    "name": "Fervent Flames",
+    "description": "Affected by Cryo for 40% less time. Increases ATK by 25%"
+  },
   "reactions": [
     {
       "name": "Vaporize",
