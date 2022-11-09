@@ -1,0 +1,31 @@
+{
+  "element": "Pyro",
+  "resonance": "Affected by Cryo for 40% less time. Increases ATK by 25%",
+  "reactions": [
+    {
+      "name": "Vaporize",
+      "elements": ["Hydro"],
+      "description": "Deals x1.5 Pyro damage to enemies affected by Hydro."
+    },
+    {
+      "name": "Melt",
+      "elements": ["Cryo"],
+      "description": "Deals x2 Pyro damage to enemies affected by Cryo"
+    },
+    {
+      "name": "Overload",
+      "elements": ["Electro"],
+      "description": "Causes an explosion that deals AoE Pyro damage"
+    },
+    {
+      "name": "Burning",
+      "elements": ["Dendro"],
+      "description": "Deals Pyro damage over time in a small AoE and applies Pyro to nearby targets"
+    },
+    {
+      "name": "Burgeon",
+      "elements": ["Dendro Core"],
+      "description": "Detonates a Dendro Core produced by the Bloom reaction immediately, dealing increased AoE Dendro damage"
+    }
+  ]
+}
