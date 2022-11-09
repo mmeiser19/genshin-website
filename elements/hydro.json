@@ -1,0 +1,29 @@
+{
+  "name": "Hydro",
+  "resonance": {
+    "name": "Soothing Water",
+    "description": "Affected by Pyro for 40% less time. Increases Max HP by 25%"
+  },
+  "reactions": [
+    {
+      "name": "Vaporize",
+      "elements": ["Pyro"],
+      "description": "Deals x2 Hydro damage to enemies affected by Pyro"
+    },
+    {
+      "name": "Freeze",
+      "elements": ["Cryo"],
+      "description": "Immobilizes the target for 2.5 seconds"
+    },
+    {
+      "name": "Electro-Charged",
+      "elements": ["Electro"],
+      "description": "Deals Electro damage over time to all nearby targets with the Wet status"
+    },
+    {
+      "name": "Bloom",
+      "elements": ["Dendro"],
+      "description": "Creates a Dendro Core that explodes after 6 seconds, dealing AoE Dendro damage"
+    }
+  ]
+}
