@@ -1,5 +1,5 @@
 {
-  "name": "Hydro",
+  "element": "Hydro",
   "resonance": {
     "name": "Soothing Water",
     "description": "Affected by Pyro for 40% less time. Increases Max HP by 25%"
@@ -23,7 +23,19 @@
     {
       "name": "Bloom",
       "elements": ["Dendro"],
-      "description": "Creates a Dendro Core that explodes after 6 seconds, dealing AoE Dendro damage"
+      "description": "Creates a Dendro Core that explodes after 6 seconds, dealing AoE Dendro damage",
+      "sub-reactions": [
+        {
+          "name": "Hyperbloom",
+          "elements": ["Dendro Core", "Electro"],
+          "description": "Triggered when applying Electro to a Dendro Core. Transforms the Dendro Core into a homing Sprawling Shot that deals increased AoE Dendro damage in a much smaller AoE"
+        },
+        {
+          "name": "Burgeon",
+          "elements": ["Dendro Core", "Pyro"],
+          "description": "Triggered when applying Pyro to a Dendro Core. Detonates the Dendro Core immediately, dealing increased AoE Dendro damage"
+        }
+      ]
     }
   ]
 }

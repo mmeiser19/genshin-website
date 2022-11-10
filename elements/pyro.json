@@ -16,7 +16,7 @@
       "description": "Deals x2 Pyro damage to enemies affected by Cryo"
     },
     {
-      "name": "Overload",
+      "name": "Overloaded",
       "elements": ["Electro"],
       "description": "Causes an explosion that deals AoE Pyro damage"
     },
