@@ -1,5 +1,5 @@
 {
-  "name": "Cryo",
+  "element": "Cryo",
   "resonance": {
     "name": "Shattering Ice",
     "description": "Affected by Electro for 40% less time. Increases CRIT Rate against enemies that are Frozen or affected by Cryo by 15%"
