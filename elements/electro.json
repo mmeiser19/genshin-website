@@ -1,0 +1,41 @@
+{
+  "element": "Electro",
+  "resonance": {
+    "name": "High Voltage",
+    "description": "Affected by Hydro for 40% less time. Superconduct, Overloaded, Electro-Charged, Quicken, Aggravate, or Hyperbloom have a 100% chance to generate an Electro Elemental Particle (CD: 5s)"
+  },
+  "reactions": [
+    {
+      "name": "Superconduct",
+      "elements": ["Cryo"],
+      "description": "Deals AoE Cryo damage and reduces the Physical resistance of enemies caught in the AoE by 40%"
+    },
+    {
+      "name": "Overloaded",
+      "elements": ["Pyro"],
+      "description": "Causes an explosion that deals AoE Pyro damage"
+    },
+    {
+      "name": "Electro-Charged",
+      "elements": ["Hydro"],
+      "description": "Deals Electro damage over time to all nearby targets with the Wet status"
+    },
+    {
+      "name": "Quicken",
+      "elements": ["Anemo"],
+      "description": "Triggered when applying Dendro to an entity with the Quicken aura. Adds Flat Damage Bonus to the attack that triggers this reaction",
+      "sub-reactions": [
+        {
+          "name": "Aggravate",
+          "elements": ["Quicken"],
+          "description": "Triggered when applying Electro to an entity with the Quicken aura. Adds Flat DMG Bonus to the attack that triggers this reaction"
+        }
+      ]
+    },
+    {
+      "name": "Hyperbloom",
+      "elements": ["Dendro Core"],
+      "description": "Triggered when applying Electro to a Dendro Core. Transforms the Dendro Core into a homing Sprawling Shot that deals increased AoE Dendro damage in a much smaller AoE"
+    }
+  ]
+}
