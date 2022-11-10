@@ -1,9 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for
 import mariadb
 import redis
+from pymongo import MongoClient, ASCENDING, DESCENDING
+mongo_client = MongoClient("mongodb://34.85.203.59:27017")
 
 app = Flask(__name__)
-
 
 """This is the main page of the website that displays all characters in the database and their details"""
 @app.route("/", methods=["GET", "POST"])
@@ -171,7 +172,7 @@ def getCharacters(element, weapon):
         cur.execute("SELECT * FROM characters NATURAL JOIN ascensionStats WHERE element = ? LIMIT 10", (element,))
     else:
         # if both are not "all", then filter by both
-        cur.execute("SELECT * FROM characters NATURAL JOIN ascensionStats WHERE element=? AND weapon=? LIMIT 10", (element, weapon))
+        cur.execute("SELECT * FROM characters NATURAL JOIN ascensionStats WHERE element = ? AND weapon = ? LIMIT 10", (element, weapon))
     characters = cur.fetchall()
     conn.close()
     return characters
@@ -212,6 +213,7 @@ def getStats():
     conn.close()
     return stats
 
+"""This method gets all unique mondstadt talent books from mariadb"""
 def getMondstadt():
     r = redis.StrictRedis(password="genshin", charset="utf-8", decode_responses=True, host="34.85.203.59", port=6379)
     mondstadt = r.hgetall("mondstadt")
@@ -227,6 +229,7 @@ def getMondstadt():
     r.close()
     return mondstadt
 
+"""This method gets all unique liyue talent books from mariadb"""
 def getLiyue():
     r = redis.StrictRedis(password="genshin", charset="utf-8", decode_responses=True, host="34.85.203.59", port=6379)
     liyue = r.hgetall("liyue")
@@ -242,6 +245,7 @@ def getLiyue():
     r.close()
     return liyue
 
+"""This method gets all unique inazuma talent books from mariadb"""
 def getInazuma():
     r = redis.StrictRedis(password="genshin", charset="utf-8", decode_responses=True, host="34.85.203.59", port=6379)
     inazuma = r.hgetall("inazuma")
@@ -257,6 +261,7 @@ def getInazuma():
     r.close()
     return inazuma
 
+"""This method gets all unique sumeru talent books from mariadb"""
 def getSumeru():
     r = redis.StrictRedis(password="genshin", charset="utf-8", decode_responses=True, host="34.85.203.59", port=6379)
     sumeru = r.hgetall("sumeru")
