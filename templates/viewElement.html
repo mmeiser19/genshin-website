@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{element}}</title>
+</head>
+<style>
+    table {
+        border-collapse: collapse;
+        border: 2px solid #000;
+    }
+    th {
+    	background-color: deepskyblue;
+        width: auto;
+        text-align: center;
+        vertical-align: middle;
+        border: 2px solid #000;
+        border-collapse: collapse;
+        padding: 0.3em;
+    }
+    td {
+        width: auto;
+        text-align: center;
+        border: 2px solid #000;
+        border-collapse: collapse;
+        padding: 0.3em;
+        border-left: 2px black;
+        vertical-align: top;
+    }
+    header {
+        margin-top: -10px;
+        margin-left: -10px;
+        margin-right: -10px;
+        background-color: mediumslateblue;
+        padding-bottom: 20px;
+        padding-top: 20px;
+    }
+</style>
+<body style="background-color: lightskyblue">
+    <header>
+    	<h1 style="text-align: center">Genshin Impact Database</h1>
+    </header>
+    <br>
+    <h2 style="text-align: center">{{element}}</h2>
+    <br>
+    <table style="margin-left: auto; margin-right: auto">
+        <tr>
+            <th>Element</th>
+            <th>{{element}}</th>
+        </tr>
+        {% for key in data.resonance %}
+            <tr>
+                <td>Resonance</td>
+                <td>{{data.resonance[key]}}</td>
+            </tr>
+        {% endfor %}
+        {% for reaction in data.reactions %}
+        <tr>
+            <td>reaction</td>
+            <td>{{reaction}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

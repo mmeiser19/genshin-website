@@ -21,12 +21,10 @@
     td {
         width: auto;
         text-align: center;
-        vertical-align: middle;
-        border: 1px solid #000;
+        border: 2px solid #000;
         border-collapse: collapse;
         padding: 0.3em;
         border-left: 2px black;
-        border-style: solid;
         vertical-align: top;
     }
     header {
@@ -51,9 +49,9 @@
     <table border="0px" style="margin-left: auto; margin-right: auto">
     	<tr>
     		<td id="mariadb">
-    		<table style=vertical-align: top>
+    		<table style="vertical-align: top">
                 <div id: "header">
-                    <h2>Characters</h2>
+                    <h2 style="vertical-align: top">Characters</h2>
                 </div>
     			<tr>
     				<th>Name</th>
@@ -207,6 +205,11 @@
         <tr class="row">
         	<td id="homework8">
                 <h2>Elements</h2>
+                <ul style="text-align: left; font-size: large">
+                    {% for element in elements %} <!-- List all elements from database -->
+                        <li><a href="{{url_for('viewElement', element=element[0])}}">{{element[0]}}</a></li>
+                    {% endfor %}
+                </ul>
         	</td>
         	<td id="homework9">
         	</td>

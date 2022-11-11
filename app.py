@@ -2,34 +2,38 @@ from flask import Flask, render_template, request, redirect, url_for
 import mariadb
 import redis
 from pymongo import MongoClient, ASCENDING, DESCENDING
-mongo_client = MongoClient("mongodb://34.85.203.59:27017")
+mongo_client = MongoClient("mongodb://admin:genshin@34.85.203.59:27017")
 
 app = Flask(__name__)
+
+# https://stackoverflow.com/questions/46831044/using-jinja2-templates-to-display-json
 
 """This is the main page of the website that displays all characters in the database and their details"""
 @app.route("/", methods=["GET", "POST"])
 def mainpage():
+    elements = getElements()
+    weapons = getWeapons()
+    mondstadt = getMondstadt()
+    liyue = getLiyue()
+    inazuma = getInazuma()
+    sumeru = getSumeru()
+    booksAdd = addBooks()
+    booksRemove = removeBooks()
+    books = getBooks()
+    monThurs = getMonThurs()
+    tuesFri = getTuesFri()
+    wedSat = getWedSat()
+    sunday = getSun()
     if "element" and "weapon" in request.args:
         element = request.args["element"]
         weapon = request.args["weapon"]
         characters = getCharacters(element, weapon)
-        elements = getElements()
-        weapons = getWeapons()
-        mondstadt = getMondstadt()
-        liyue = getLiyue()
-        inazuma = getInazuma()
-        sumeru = getSumeru()
-        booksAdd = addBooks()
-        booksRemove = removeBooks()
-        books = getBooks()
-        monThurs = getMonThurs()
-        tuesFri = getTuesFri()
-        wedSat = getWedSat()
-        sunday = getSun()
         return render_template("mainpage.html", characters=characters, elements=elements, weapons=weapons, mondstadt=mondstadt, liyue=liyue, inazuma=inazuma, sumeru=sumeru, booksAdd=booksAdd, booksRemove=booksRemove, books=books, monThurs=monThurs, tuesFri=tuesFri, wedSat=wedSat, sunday=sunday)
     elif "addBook" in request.args:
+        # if the user wants to add a book to the to-do list, then add it to the corresponding Redis sets
         r = redis.StrictRedis(password="genshin", charset="utf-8", decode_responses=True, host="34.85.203.59", port=6379)
         book = request.args["addBook"]
+        # checks to see what days the book is available on and adds it to those days in the to-do list
         for day in getDays():
             if r.hget("mondstadt", day) == book:
                 r.sadd(day, book)
@@ -44,24 +48,12 @@ def mainpage():
         cur = conn.cursor()
         cur.execute("SELECT * FROM characters NATURAL JOIN ascensionStats LIMIT 10")
         characters = cur.fetchall()
-        elements = getElements()
-        weapons = getWeapons()
-        conn.close()
-        mondstadt = getMondstadt()
-        liyue = getLiyue()
-        inazuma = getInazuma()
-        sumeru = getSumeru()
-        booksAdd = addBooks()
-        booksRemove = removeBooks()
-        books = getBooks()
-        monThurs = getMonThurs()
-        tuesFri = getTuesFri()
-        wedSat = getWedSat()
-        sunday = getSun()
         return render_template("mainpage.html", characters=characters, elements=elements, weapons=weapons, mondstadt=mondstadt, liyue=liyue, inazuma=inazuma, sumeru=sumeru, booksAdd=booksAdd, booksRemove=booksRemove, books=books, monThurs=monThurs, tuesFri=tuesFri, wedSat=wedSat, sunday=sunday)
     elif "removeBook" in request.args:
+        # if the user wants to remove a book from the to-do list, then remove it from the corresponding Redis sets
         r = redis.StrictRedis(password="genshin", charset="utf-8", decode_responses=True, host="34.85.203.59", port=6379)
         book = request.args["removeBook"]
+        # checks to see what days the book is on and removes it from those days in the to-do list
         for day in getDays():
             if r.hget("mondstadt", day) == book:
                 r.srem(day, book)
@@ -76,21 +68,17 @@ def mainpage():
         cur = conn.cursor()
         cur.execute("SELECT * FROM characters NATURAL JOIN ascensionStats LIMIT 10")
         characters = cur.fetchall()
-        elements = getElements()
-        weapons = getWeapons()
-        conn.close()
-        mondstadt = getMondstadt()
-        liyue = getLiyue()
-        inazuma = getInazuma()
-        sumeru = getSumeru()
-        booksAdd = addBooks()
-        booksRemove = removeBooks()
-        books = getBooks()
-        monThurs = getMonThurs()
-        tuesFri = getTuesFri()
-        wedSat = getWedSat()
-        sunday = getSun()
         return render_template("mainpage.html", characters=characters, elements=elements, weapons=weapons, mondstadt=mondstadt, liyue=liyue, inazuma=inazuma, sumeru=sumeru, booksAdd=booksAdd, booksRemove=booksRemove, books=books, monThurs=monThurs, tuesFri=tuesFri, wedSat=wedSat, sunday=sunday)
+    elif "key" in request.args and "value" in request.args:
+        #if the user wants to filter the elements with a key/value pair, then filter the elements
+        key = request.args["key"]
+        value = request.args["value"]
+    elif "element" in request.form:
+        print("redirecting")
+        # if the user wants to view an element's page, then redirect them to the element page
+        element = request.args["element"]
+        print(element)
+        return redirect(url_for("viewElement", element=request.args["element"]))
     elif request.method == "POST":
         #if "add character link is clicked", go to "add character" page
         return redirect(url_for("addCharacter"))
@@ -100,20 +88,6 @@ def mainpage():
         cur = conn.cursor()
         cur.execute("SELECT * FROM characters NATURAL JOIN ascensionStats LIMIT 10")
         characters = cur.fetchall()
-        elements = getElements()
-        weapons = getWeapons()
-        conn.close()
-        mondstadt = getMondstadt()
-        liyue = getLiyue()
-        inazuma = getInazuma()
-        sumeru = getSumeru()
-        booksAdd = addBooks()
-        booksRemove = removeBooks()
-        books = getBooks()
-        monThurs = getMonThurs()
-        tuesFri = getTuesFri()
-        wedSat = getWedSat()
-        sunday = getSun()
         return render_template("mainpage.html", characters=characters, elements=elements, weapons=weapons, mondstadt=mondstadt, liyue=liyue, inazuma=inazuma, sumeru=sumeru, booksAdd=booksAdd, booksRemove=booksRemove, books=books, monThurs=monThurs, tuesFri=tuesFri, wedSat=wedSat, sunday=sunday)
 
 """This is the page that allows users to add characters to the database"""
@@ -132,7 +106,7 @@ def addCharacter():
         cur = conn.cursor()
         cur.execute("SELECT 1 FROM characters where name=? LIMIT 1", (name,))
         exists = cur.fetchone()
-        if exists == None:
+        if exists is None:
             # if the character doesn't exist, then add it to the database
             cur.execute("INSERT INTO characters (name, element, weapon, rarity, nation, stat, talentBook) VALUES (?, ?, ?, ?, ?, ?, ?)", (name, element, weapon, rarity, nation, stat, talentBook))
             conn.commit()
@@ -156,6 +130,13 @@ def addCharacter():
         stats = getStats()
         talentBooks = getBooks()
         return render_template("addCharacter.html", elements=elements, weapons=weapons, rarities=rarities, stats=stats, talentBooks=talentBooks)
+
+@app.route("/viewElement", methods=["GET", "POST"])
+def viewElement():
+    element = request.args["element"]
+    db = mongo_client.genshin
+    data = db.elements.find_one({"element": element}, {"_id": False})
+    return render_template("viewElement.html", element=element, data=data)
 
 """This method returns 10 characters from mariadb based on the element and weapon"""
 def getCharacters(element, weapon):
