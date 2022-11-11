@@ -7,27 +7,27 @@
   "reactions": [
     {
       "name": "Vaporize",
-      "elements": ["Hydro"],
+      "elements": ["Pyro", "Hydro"],
       "description": "Deals x1.5 Pyro damage to enemies affected by Hydro."
     },
     {
       "name": "Melt",
-      "elements": ["Cryo"],
+      "elements": ["Pyro", "Cryo"],
       "description": "Deals x2 Pyro damage to enemies affected by Cryo"
     },
     {
       "name": "Overloaded",
-      "elements": ["Electro"],
+      "elements": ["Pyro", "Electro"],
       "description": "Causes an explosion that deals AoE Pyro damage"
     },
     {
       "name": "Burning",
-      "elements": ["Dendro"],
+      "elements": ["Pyro", "Dendro"],
       "description": "Deals Pyro damage over time in a small AoE and applies Pyro to nearby targets"
     },
     {
       "name": "Burgeon",
-      "elements": ["Dendro Core"],
+      "elements": ["Dendro Core", "Pyro"],
       "description": "Detonates a Dendro Core produced by the Bloom reaction immediately, dealing increased AoE Dendro damage"
     }
   ]

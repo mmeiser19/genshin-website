@@ -7,8 +7,8 @@
   "reactions": [
     {
       "name": "Swirl",
-    "elements": ["Cryo", "Electro", "Hydro","Pyro"],
-    "description": "Deals Elemental damage of the involved element while spreading the involved elemental status to nearby enemies"
+      "elements": ["Anemo", "Cryo", "Electro", "Hydro", "Pyro"],
+      "description": "Deals Elemental damage of the involved element while spreading the involved elemental status to nearby enemies"
     }
   ]
 }

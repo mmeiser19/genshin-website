@@ -7,34 +7,34 @@
   "reactions": [
     {
       "name": "Superconduct",
-      "elements": ["Cryo"],
+      "elements": ["Electro", "Cryo"],
       "description": "Deals AoE Cryo damage and reduces the Physical resistance of enemies caught in the AoE by 40%"
     },
     {
       "name": "Overloaded",
-      "elements": ["Pyro"],
+      "elements": ["Electro", "Pyro"],
       "description": "Causes an explosion that deals AoE Pyro damage"
     },
     {
       "name": "Electro-Charged",
-      "elements": ["Hydro"],
+      "elements": ["Electro", "Hydro"],
       "description": "Deals Electro damage over time to all nearby targets with the Wet status"
     },
     {
       "name": "Quicken",
-      "elements": ["Anemo"],
+      "elements": ["Dendro", "Electro"],
       "description": "Triggered when applying Dendro to an entity with the Quicken aura. Adds Flat Damage Bonus to the attack that triggers this reaction",
       "sub-reactions": [
         {
           "name": "Aggravate",
-          "elements": ["Quicken"],
+          "elements": ["Quicken", "Electro"],
           "description": "Triggered when applying Electro to an entity with the Quicken aura. Adds Flat DMG Bonus to the attack that triggers this reaction"
         }
       ]
     },
     {
       "name": "Hyperbloom",
-      "elements": ["Dendro Core"],
+      "elements": ["Dendro Core", "Electro"],
       "description": "Triggered when applying Electro to a Dendro Core. Transforms the Dendro Core into a homing Sprawling Shot that deals increased AoE Dendro damage in a much smaller AoE"
     }
   ]

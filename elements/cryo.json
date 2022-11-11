@@ -7,17 +7,17 @@
   "reactions": [
     {
       "name": "Superconduct",
-      "elements": ["Electro"],
+      "elements": ["Cryo", "Electro"],
       "description": "Deals AoE Cryo damage and reduces the Physical resistance of enemies caught in the AoE by 40%"
     },
     {
       "name": "Freeze",
-      "elements": ["Hydro"],
+      "elements": ["Cryo", "Hydro"],
       "description": "Immobilizes the target for 2.5 seconds"
     },
     {
       "name": "Melt",
-      "elements": ["Pyro"],
+      "elements": ["Cryo", "Pyro"],
       "description": "Deals x1.5 Cryo damage to enemies affected by Pyro"
     }
   ]

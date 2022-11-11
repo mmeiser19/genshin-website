@@ -7,7 +7,7 @@
   "reactions": [
     {
       "name": "Crystallize",
-      "elements": ["Cryo", "Electro", "Hydro", "Pyro"],
+      "elements": ["Geo", "Cryo", "Electro", "Hydro", "Pyro"],
       "description": "Creates a shard of the involved element. Picking it up creates a shield of that element around the character"
     }
   ]

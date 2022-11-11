@@ -7,7 +7,7 @@
   "reactions": [
     {
       "name": "Bloom",
-      "elements": ["Hydro"],
+      "elements": ["Dendro", "Hydro"],
       "description": "Creates a Dendro Core that explodes after 6 seconds, dealing AoE Dendro damage",
       "sub-reactions": [
         {
@@ -24,19 +24,19 @@
     },
     {
       "name": "Quicken",
-      "elements": ["Electro"],
+      "elements": ["Dendro", "Electro"],
       "description": "Applies a Quicken aura",
       "sub-reactions": [
         {
           "name": "Spread",
-          "elements": ["Quicken"],
+          "elements": ["Quicken", "Dendro"],
           "description": "Triggered when applying Dendro to an entity with the Quicken aura. Adds Flat Damage Bonus to the attack that triggers this reaction"
         }
       ]
     },
     {
       "name": "Burning",
-      "elements": ["Pyro"],
+      "elements": ["Dendro", "Pyro"],
       "description": "Deals Pyro damage over time in a small AoE and applies Pyro to nearby targets"
     }
   ]
