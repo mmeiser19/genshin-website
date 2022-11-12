@@ -29,8 +29,8 @@
     }
     header {
         margin-top: -10px;
-        margin-left: -10px;
-        margin-right: -10px;
+        margin-left: -8px;
+        margin-right: -8px;
         background-color: mediumslateblue;
         padding-bottom: 20px;
         padding-top: 20px;
@@ -42,24 +42,42 @@
     </header>
     <br>
     <h2 style="text-align: center">{{element}}</h2>
-    <br>
-    <table style="margin-left: auto; margin-right: auto">
+    <form method="post">
+    <table style="margin-left: auto; margin-right: auto; max-width: 400px">
         <tr>
             <th>Element</th>
             <th>{{element}}</th>
         </tr>
-        {% for key in data.resonance %}
-            <tr>
-                <td>Resonance</td>
-                <td>{{data.resonance[key]}}</td>
-            </tr>
-        {% endfor %}
+        <tr>
+            <td>Elemental Resonance</td>
+            <td><input type="text", name="resonance", value="{{data.resonance.name}}"></td>
+        </tr>
         {% for reaction in data.reactions %}
         <tr>
-            <td>reaction</td>
-            <td>{{reaction}}</td>
+            <!-- statement is to make it so that "Reaction" can span multiple rows -->
+            {% if loop.first %}
+                <td rowspan="{{data.reactions[reaction] | count}}">Reactions</td>
+            {% endif %}
+            <td><input type="text", name="reaction", value="{{reaction.name}}"></td>
+            {% for element in reaction.name.elements %}
+            <td>{{element[0]}}</td>
+            {% endfor %}
         </tr>
         {% endfor %}
     </table>
+    <br>
+    <div id="submit" style="text-align: center">
+        <input type="submit" value="Make changes">
+    </div>
+    </form>
+    <br>
+    <h2 style="text-align: center">Add a new key/value pair:</h2>
+    <form method="get" style="text-align: center">
+        <p>
+            Key: <input type="text", name="key">
+            Value: <input type="text", name="value">
+        </p>
+        <input type="submit" value="Add to {{element}}">
+    </form>
 </body>
 </html>

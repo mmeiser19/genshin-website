@@ -25,12 +25,13 @@ def mainpage():
     wedSat = getWedSat()
     sunday = getSun()
     if "element" and "weapon" in request.args:
+        # filter character table by element and weapon
         element = request.args["element"]
         weapon = request.args["weapon"]
         characters = getCharacters(element, weapon)
         return render_template("mainpage.html", characters=characters, elements=elements, weapons=weapons, mondstadt=mondstadt, liyue=liyue, inazuma=inazuma, sumeru=sumeru, booksAdd=booksAdd, booksRemove=booksRemove, books=books, monThurs=monThurs, tuesFri=tuesFri, wedSat=wedSat, sunday=sunday)
     elif "addBook" in request.args:
-        # if the user wants to add a book to the to-do list, then add it to the corresponding Redis sets
+        # adds the selected book to the to-do list
         r = redis.StrictRedis(password="genshin", charset="utf-8", decode_responses=True, host="34.85.203.59", port=6379)
         book = request.args["addBook"]
         # checks to see what days the book is available on and adds it to those days in the to-do list
@@ -50,7 +51,7 @@ def mainpage():
         characters = cur.fetchall()
         return render_template("mainpage.html", characters=characters, elements=elements, weapons=weapons, mondstadt=mondstadt, liyue=liyue, inazuma=inazuma, sumeru=sumeru, booksAdd=booksAdd, booksRemove=booksRemove, books=books, monThurs=monThurs, tuesFri=tuesFri, wedSat=wedSat, sunday=sunday)
     elif "removeBook" in request.args:
-        # if the user wants to remove a book from the to-do list, then remove it from the corresponding Redis sets
+        # removes the selected book from the to-do list
         r = redis.StrictRedis(password="genshin", charset="utf-8", decode_responses=True, host="34.85.203.59", port=6379)
         book = request.args["removeBook"]
         # checks to see what days the book is on and removes it from those days in the to-do list
@@ -73,12 +74,13 @@ def mainpage():
         #if the user wants to filter the elements with a key/value pair, then filter the elements
         key = request.args["key"]
         value = request.args["value"]
+        print(key, value)
+        # get all elements that match the key/value pair
+        return redirect(url_for("mainpage"))
     elif "element" in request.form:
-        print("redirecting")
         # if the user wants to view an element's page, then redirect them to the element page
         element = request.args["element"]
-        print(element)
-        return redirect(url_for("viewElement", element=request.args["element"]))
+        return redirect(url_for("viewElement", element=element))
     elif request.method == "POST":
         #if "add character link is clicked", go to "add character" page
         return redirect(url_for("addCharacter"))
@@ -133,10 +135,24 @@ def addCharacter():
 
 @app.route("/viewElement", methods=["GET", "POST"])
 def viewElement():
-    element = request.args["element"]
-    db = mongo_client.genshin
-    data = db.elements.find_one({"element": element}, {"_id": False})
-    return render_template("viewElement.html", element=element, data=data)
+    if request.method == "POST":
+        # if the user has submitted any changes to the element, then they need to be updated in mongoDB
+        resonance = request.form.get("resonance")
+        reactions = request.form.getlist("reaction")
+        print(resonance)
+        print(reactions)
+        return redirect(url_for("mainpage"))
+    elif "key" in request.args and "value" in request.args:
+        # if the user wants to add a new key value pair to the element, then add it to mongoDB
+        key = request.args["key"]
+        value = request.args["value"]
+        print(key, value)
+        return redirect(url_for("mainpage"))
+    else:
+        element = request.args["element"]
+        db = mongo_client.genshin
+        data = db.elements.find_one({"element": element}, {"_id": False})
+        return render_template("viewElement.html", element=element, data=data)
 
 """This method returns 10 characters from mariadb based on the element and weapon"""
 def getCharacters(element, weapon):

@@ -29,8 +29,8 @@
     }
     header {
         margin-top: -10px;
-        margin-left: -10px;
-        margin-right: -10px;
+        margin-left: -8px;
+        margin-right: -8px;
         background-color: mediumslateblue;
         padding-bottom: 20px;
         padding-top: 20px;
@@ -210,6 +210,14 @@
                         <li><a href="{{url_for('viewElement', element=element[0])}}">{{element[0]}}</a></li>
                     {% endfor %}
                 </ul>
+                <h3>Filter Elements</h3>
+            <form method="get" style="text-align: center">
+                <p>
+                    Key: <input type="text", name="key">
+                    Value: <input type="text", name="value">
+                    <input type="submit" value="Filter">
+                </p>
+            </form>
         	</td>
         	<td id="homework9">
         	</td>
