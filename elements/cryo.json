@@ -1,24 +1,7 @@
 {
   "element": "Cryo",
-  "resonance": {
-    "name": "Shattering Ice",
-    "description": "Affected by Electro for 40% less time. Increases CRIT Rate against enemies that are Frozen or affected by Cryo by 15%"
-  },
-  "reactions": [
-    {
-      "name": "Superconduct",
-      "elements": ["Cryo", "Electro"],
-      "description": "Deals AoE Cryo damage and reduces the Physical resistance of enemies caught in the AoE by 40%"
-    },
-    {
-      "name": "Freeze",
-      "elements": ["Cryo", "Hydro"],
-      "description": "Immobilizes the target for 2.5 seconds"
-    },
-    {
-      "name": "Melt",
-      "elements": ["Cryo", "Pyro"],
-      "description": "Deals x1.5 Cryo damage to enemies affected by Pyro"
-    }
-  ]
+  "color": "Light Blue",
+  "archon": "The Tsaritsa",
+  "resonance": "Shattering Ice",
+  "reactions": ["Freeze", "Melt", "Superconduct"]
 }

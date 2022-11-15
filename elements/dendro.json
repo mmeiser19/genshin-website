@@ -1,43 +1,7 @@
 {
   "element": "Dendro",
-  "resonance": {
-    "name": "Sprawling Greenery",
-    "description": "Elemental Mastery increased by 50. After triggering Burning, Quicken, or Bloom reactions, all nearby party members gain 30 Elemental Mastery for 6s. After triggering Aggravate, Spread, Hyperbloom, or Burgeon reactions, all nearby party members gain 20 Elemental Mastery for 6s. The durations of the aforementioned effects will be counted independently"
-  },
-  "reactions": [
-    {
-      "name": "Bloom",
-      "elements": ["Dendro", "Hydro"],
-      "description": "Creates a Dendro Core that explodes after 6 seconds, dealing AoE Dendro damage",
-      "sub-reactions": [
-        {
-          "name": "Hyperbloom",
-          "elements": ["Dendro Core", "Electro"],
-          "description": "Triggered when applying Electro to a Dendro Core. Transforms the Dendro Core into a homing Sprawling Shot that deals increased AoE Dendro damage in a much smaller AoE"
-        },
-        {
-          "name": "Burgeon",
-          "elements": ["Dendro Core", "Pyro"],
-          "description": "Triggered when applying Pyro to a Dendro Core. Detonates the Dendro Core immediately, dealing increased AoE Dendro damage"
-        }
-      ]
-    },
-    {
-      "name": "Quicken",
-      "elements": ["Dendro", "Electro"],
-      "description": "Applies a Quicken aura",
-      "sub-reactions": [
-        {
-          "name": "Spread",
-          "elements": ["Quicken", "Dendro"],
-          "description": "Triggered when applying Dendro to an entity with the Quicken aura. Adds Flat Damage Bonus to the attack that triggers this reaction"
-        }
-      ]
-    },
-    {
-      "name": "Burning",
-      "elements": ["Dendro", "Pyro"],
-      "description": "Deals Pyro damage over time in a small AoE and applies Pyro to nearby targets"
-    }
-  ]
+  "color": "Green",
+  "archon": "Lesser Lord Kusanali",
+  "resonance": "Sprawling Greenery",
+  "reactions": [ "Bloom", "Burgeon", "Hyperbloom", "Quicken", "Spread", "Burning" ]
 }

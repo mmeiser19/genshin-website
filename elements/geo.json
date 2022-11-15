@@ -1,14 +1,7 @@
 {
   "element": "Geo",
-  "resonance": {
-    "name": "Enduring Rock",
-    "description": "Increases shield strength by 15%. Additionally, characters protected by a shield will have the following special characteristics: DMG dealt increased by 15%, dealing DMG to enemies will decrease their Geo RES by 20% for 15s"
-  },
-  "reactions": [
-    {
-      "name": "Crystallize",
-      "elements": ["Geo", "Cryo", "Electro", "Hydro", "Pyro"],
-      "description": "Creates a shard of the involved element. Picking it up creates a shield of that element around the character"
-    }
-  ]
+  "color": "Yellow",
+  "archon": "Rex Lapis",
+  "resonance": "Enduring Rock",
+  "reactions": ["Crystallize"]
 }

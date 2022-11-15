@@ -1,14 +1,7 @@
 {
   "element": "Anemo",
-  "resonance": {
-    "name": "Impetuous Winds",
-    "description": "Decreases Stamina Consumption by 15%. Increases Movement SPD by 10%. Shortens Skill CD by 5%"
-  },
-  "reactions": [
-    {
-      "name": "Swirl",
-      "elements": ["Anemo", "Cryo", "Electro", "Hydro", "Pyro"],
-      "description": "Deals Elemental damage of the involved element while spreading the involved elemental status to nearby enemies"
-    }
-  ]
+  "color": "Light Green",
+  "archon": "Lord Barbatos",
+  "resonance": "Impetuous Winds",
+  "reactions": ["Swirl"]
 }

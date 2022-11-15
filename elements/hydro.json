@@ -1,41 +1,7 @@
 {
   "element": "Hydro",
-  "resonance": {
-    "name": "Soothing Water",
-    "description": "Affected by Pyro for 40% less time. Increases Max HP by 25%"
-  },
-  "reactions": [
-    {
-      "name": "Vaporize",
-      "elements": ["Hydro", "Pyro"],
-      "description": "Deals x2 Hydro damage to enemies affected by Pyro"
-    },
-    {
-      "name": "Freeze",
-      "elements": ["Hydro", "Cryo"],
-      "description": "Immobilizes the target for 2.5 seconds"
-    },
-    {
-      "name": "Electro-Charged",
-      "elements": ["Hydro", "Electro"],
-      "description": "Deals Electro damage over time to all nearby targets with the Wet status"
-    },
-    {
-      "name": "Bloom",
-      "elements": ["Hydro", "Dendro"],
-      "description": "Creates a Dendro Core that explodes after 6 seconds, dealing AoE Dendro damage",
-      "sub-reactions": [
-        {
-          "name": "Hyperbloom",
-          "elements": ["Dendro Core", "Electro"],
-          "description": "Triggered when applying Electro to a Dendro Core. Transforms the Dendro Core into a homing Sprawling Shot that deals increased AoE Dendro damage in a much smaller AoE"
-        },
-        {
-          "name": "Burgeon",
-          "elements": ["Dendro Core", "Pyro"],
-          "description": "Triggered when applying Pyro to a Dendro Core. Detonates the Dendro Core immediately, dealing increased AoE Dendro damage"
-        }
-      ]
-    }
-  ]
+  "color": "Blue",
+  "archon": "Focalors",
+  "resonance": "Soothing Water",
+  "reactions": ["Bloom", "Burgeon", "Hyperbloom", "Electro-Charged", "Freeze", "Vaporize"]
 }
