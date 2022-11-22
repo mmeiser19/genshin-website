@@ -1,16 +1,17 @@
 from flask import Flask, render_template, request, redirect, url_for
 import mariadb
 import redis
-from pymongo import MongoClient, ASCENDING, DESCENDING
+from pymongo import MongoClient, ASCENDING
 mongo_client = MongoClient("mongodb://admin:genshin@34.85.203.59:27017")
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="templates", static_folder="static")
 
 # https://stackoverflow.com/questions/46831044/using-jinja2-templates-to-display-json
 
 """This is the main page of the website that displays all characters in the database and their details"""
 @app.route("/", methods=["GET", "POST"])
 def mainpage():
+    characters = getCharacters("all", "all")
     elements = getElements()
     weapons = getWeapons()
     mondstadt = getMondstadt()
@@ -74,9 +75,20 @@ def mainpage():
         #if the user wants to filter the elements with a key/value pair, then filter the elements
         key = request.args["key"]
         value = request.args["value"]
-        print(key, value)
+        db = mongo_client.genshin
+        collection = db.elements
+        if "," in value: # if value contains a comma
+            mongo = collection.find({}, {"element": 1, "_id": 0})
+            mongo.sort("element", ASCENDING)
+            msg = "Please enter only one value when filtering elements"
+            return render_template("mainpage.html", characters=characters, elements=elements, weapons=weapons, mondstadt=mondstadt, liyue=liyue, inazuma=inazuma, sumeru=sumeru, booksAdd=booksAdd, booksRemove=booksRemove, books=books, monThurs=monThurs, tuesFri=tuesFri, wedSat=wedSat, sunday=sunday, mongo=mongo, msg=msg)
+        # checking to see if the user provided multiple values
+        #value = value.replace(",", "")
+        #value = value.split()
         # get all elements that match the key/value pair
-        return redirect(url_for("mainpage"))
+        mongo = collection.find({key: value}, {"element": 1, "_id": 0})
+        mongo.sort("element", ASCENDING)
+        return render_template("mainpage.html", characters=characters, elements=elements, weapons=weapons, mondstadt=mondstadt, liyue=liyue, inazuma=inazuma, sumeru=sumeru, booksAdd=booksAdd, booksRemove=booksRemove, books=books, monThurs=monThurs, tuesFri=tuesFri, wedSat=wedSat, sunday=sunday, mongo=mongo)
     elif "element" in request.form:
         # if the user wants to view an element's page, then redirect them to the element page
         element = request.args["element"]
@@ -90,7 +102,12 @@ def mainpage():
         cur = conn.cursor()
         cur.execute("SELECT * FROM characters NATURAL JOIN ascensionStats LIMIT 10")
         characters = cur.fetchall()
-        return render_template("mainpage.html", characters=characters, elements=elements, weapons=weapons, mondstadt=mondstadt, liyue=liyue, inazuma=inazuma, sumeru=sumeru, booksAdd=booksAdd, booksRemove=booksRemove, books=books, monThurs=monThurs, tuesFri=tuesFri, wedSat=wedSat, sunday=sunday)
+        db = mongo_client.genshin
+        collection = db.elements
+        mongo = collection.find({}, {"element": 1, "_id": 0})
+        #sort the dictionary to be in alphabetical order
+        mongo.sort("element", ASCENDING)
+        return render_template("mainpage.html", characters=characters, elements=elements, weapons=weapons, mondstadt=mondstadt, liyue=liyue, inazuma=inazuma, sumeru=sumeru, booksAdd=booksAdd, booksRemove=booksRemove, books=books, monThurs=monThurs, tuesFri=tuesFri, wedSat=wedSat, sunday=sunday, mongo=mongo)
 
 """This is the page that allows users to add characters to the database"""
 @app.route("/addCharacter", methods=["GET", "POST"])
@@ -136,17 +153,35 @@ def addCharacter():
 @app.route("/viewElement", methods=["GET", "POST"])
 def viewElement():
     if request.method == "POST":
-        # if the user has submitted any changes to the element, then they need to be updated in mongoDB
-        resonance = request.form.get("resonance")
-        reactions = request.form.getlist("reaction")
-        print(resonance)
-        print(reactions)
+        # iterate through all of request.form and update the element in mongoDB
+        db = mongo_client.genshin
+        collection = db.elements
+        for key, value in request.form.items():
+            if key != "element" and "reaction" not in key: #exclude the element argument from the html form
+                collection.update_one({"element": request.args["element"]}, {"$set": {key: value}})
+            elif key != "element": # used for the list of reactions
+                reactions = []
+                i = 0
+                while f"reaction{i}" in request.form:
+                    reactions += [request.form[f"reaction{i}"]]
+                    i += 1
+                collection.update_one({"element": request.args["element"]}, {"$set": {"reactions": reactions}})
         return redirect(url_for("mainpage"))
     elif "key" in request.args and "value" in request.args:
         # if the user wants to add a new key value pair to the element, then add it to mongoDB
         key = request.args["key"]
         value = request.args["value"]
-        print(key, value)
+        # add the key/value pair to the element json file in mongoDB
+        db = mongo_client.genshin
+        collection = db.elements
+        element = request.args["element"]
+        data = db.elements.find_one({"element": element}, {"_id": False})
+        if key == "reactions" or "reaction": # if key is "reaction", then add the value to the list of reactions
+            msg = "Sorry, adding a new reaction isn't working right now!"
+            # collection.update_one({"element": request.args["element"]}, {"$push": {"reactions": value}})
+            return render_template("viewElement.html", element=element, data=data, msg=msg)
+        else:
+            collection.update_one({"element": request.args["element"]}, {"$set": {key: value}})
         return redirect(url_for("mainpage"))
     else:
         element = request.args["element"]

@@ -2,67 +2,42 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{element}}</title>
+    <title>{{ element }}</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for("static", filename="style/main.css") }}">
 </head>
-<style>
-    table {
-        border-collapse: collapse;
-        border: 2px solid #000;
-    }
-    th {
-    	background-color: deepskyblue;
-        width: auto;
-        text-align: center;
-        vertical-align: middle;
-        border: 2px solid #000;
-        border-collapse: collapse;
-        padding: 0.3em;
-    }
-    td {
-        width: auto;
-        text-align: center;
-        border: 2px solid #000;
-        border-collapse: collapse;
-        padding: 0.3em;
-        border-left: 2px black;
-        vertical-align: top;
-    }
-    header {
-        margin-top: -10px;
-        margin-left: -8px;
-        margin-right: -8px;
-        background-color: mediumslateblue;
-        padding-bottom: 20px;
-        padding-top: 20px;
-    }
-</style>
 <body style="background-color: lightskyblue">
-    <header>
+    <header class="header">
     	<h1 style="text-align: center">Genshin Impact Database</h1>
     </header>
+    <h2 style="color:red; text-align: center">{{msg}}</h2>
     <br>
-    <h2 style="text-align: center">{{element}}</h2>
+    <h2 style="text-align: center">{{ element }}</h2>
     <form method="post">
-    <table style="margin-left: auto; margin-right: auto; max-width: 400px">
-        <tr>
-            <th>Element</th>
-            <th>{{element}}</th>
-        </tr>
-        <tr>
-            <td>Elemental Resonance</td>
-            <td><input type="text", name="resonance", value="{{data.resonance.name}}"></td>
-        </tr>
-        {% for reaction in data.reactions %}
-        <tr>
-            <!-- statement is to make it so that "Reaction" can span multiple rows -->
+    <table style="margin-left: auto; margin-right: auto; max-width: 400px" class="table">
+        <!-- display all the keys and values in the json file -->
+        {% for key, value in data.items() %}
             {% if loop.first %}
-                <td rowspan="{{data.reactions[reaction] | count}}">Reactions</td>
+            <th>{{ key }}</th>
+            <th>{{ value }}</th>
+            <input type="hidden" name="element" value="{{ value }}">
+            <!-- check if the value is a list, if it is then iterate through the list and display the values -->
+            {% elif value is iterable and value is not string %}
+                {% for i in range(value | length) %}
+                    <tr>
+                        <!-- statement is to make it so that "Reaction" spans multiple rows -->
+                        {% if loop.first %}
+                            <td rowspan="{{ value | length }}">{{ key }}</td>
+                        {% endif %}
+                    <td><input type="text" name="reaction{{i}}" value="{{value[i]}}"></td>
+                    </tr>
+                {% endfor %}
+            <!-- else print normally -->
+            {% else %}
+                <tr>
+                    <td>{{ key }}</td>
+                    <td><input type="text" name="{{ key }}" value="{{ value }}"></td>
+                </tr>
             {% endif %}
-            <td><input type="text", name="reaction", value="{{reaction.name}}"></td>
-            {% for element in reaction.name.elements %}
-            <td>{{element[0]}}</td>
-            {% endfor %}
-        </tr>
         {% endfor %}
     </table>
     <br>
@@ -74,10 +49,12 @@
     <h2 style="text-align: center">Add a new key/value pair:</h2>
     <form method="get" style="text-align: center">
         <p>
-            Key: <input type="text", name="key">
-            Value: <input type="text", name="value">
+            <input type="hidden" name="element" value="{{ element }}">
+            Key: <input type="text" name="key">
+            Value: <input type="text" name="value">
         </p>
-        <input type="submit" value="Add to {{element}}">
+        <input type="submit" value="Add to {{ element }}">
     </form>
+    <h3 style="text-align: center; color: red">Do not add any reactions, that part of the site currently is not working</h3>
 </body>
 </html>

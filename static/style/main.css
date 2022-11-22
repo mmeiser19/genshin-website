@@ -1,0 +1,68 @@
+.table {
+    border-collapse: collapse;
+    border: 2px solid #000;
+}
+
+.table td {
+    width: auto;
+    text-align: center;
+    border: 2px solid #000;
+    border-collapse: collapse;
+    padding: 0.3em;
+    border-left: 2px black;
+    vertical-align: top;
+}
+
+.table th {
+    background-color: deepskyblue;
+    width: auto;
+    text-align: center;
+    vertical-align: middle;
+    border: 2px solid #000;
+    border-collapse: collapse;
+    padding: 0.3em;
+}
+
+/* These aren't working as planned, maybe cuz im using this as the table that nests the other tables? */
+.table2 {
+    border: 0;
+    vertical-align: top;
+}
+
+.table2 td {
+    border: 0;
+}
+
+.table2 th {
+    border: 0;
+}
+
+.header {
+    margin-top: -8px;
+    margin-left: -8px;
+    margin-right: -8px;
+    background-color: mediumslateblue;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.alert {
+  padding: 20px;
+  background-color: #f44336;
+  color: white;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+}

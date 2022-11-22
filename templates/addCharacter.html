@@ -3,28 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Add character</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for("static", filename="style/main.css") }}">
 </head>
-<style>
-	header {
-	  	margin-top: -10px;
-	    margin-left: -8px;
-	    margin-right: -8px;
-	    background-color: mediumslateblue;
-	    padding-bottom: 20px;
-	    padding-top: 20px;
-	}
-</style>
 <body style="background-color: lightskyblue">
-	<header>
+	<header class="header">
 	    <h1 style="text-align: center">Genshin Impact Database</h1>
 	</header>
     <br>
     <!-- Message to display when page is reloaded if the character being added already exists -->
     <h2 style="color:red; text-align: center">{{msg}}</h2>
-    <div id: "header">
+    <div id="header">
         <h2 style="text-align: center">Add New Character</h2>
     </div>
-    <table border="0" style="margin-left: auto; margin-right: auto">
+    <table style="margin-left: auto; margin-right: auto">
     <!-- Form to add a new character -->
     <form method="POST">
         <tr>
@@ -39,7 +30,7 @@
             <td>Element:</td>
             <td><select name="element">
             {% for element in elements %}
-            	<option value="{{element[0]}}">{{element[0]}}</option>
+            	<option value="{{ element[0] }}">{{ element[0] }}</option>
             {% endfor %}</select>
             </td>
         </tr>
@@ -47,7 +38,7 @@
             <td>Weapon:</td>
             <td><select name="weapon">
             {% for weapon in weapons %}
-            	<option value="{{weapon[0]}}">{{weapon[0]}}</option>
+            	<option value="{{ weapon[0] }}">{{ weapon[0] }}</option>
             {% endfor %}</select>
             </td>
         </tr>
@@ -55,7 +46,7 @@
             <td>Rarity:</td>
             <td><select name="rarity">
             {% for rarity in rarities %}
-            	<option value="{{rarity[0]}}">{{rarity[0]}}</option>
+            	<option value="{{ rarity[0] }}">{{ rarity[0] }}</option>
             {% endfor %}</select>
             </td>
         </tr>
@@ -63,7 +54,7 @@
             <td>Ascension stat:</td>
             <td><select name="stat">
             {% for stat in stats %}
-                <option value="{{stat[0]}}">{{stat[0]}}</option>
+                <option value="{{ stat[0] }}">{{ stat[0] }}</option>
             {% endfor %}</select>
             </td>
         </tr>
@@ -71,7 +62,7 @@
             <td>Talent Book:</td>
             <td><select name="talentBook">
             {% for talentBook in talentBooks %}
-                <option value="{{talentBook[0]}}">{{talentBook[0]}}</option>
+                <option value="{{ talentBook[0] }}">{{ talentBook[0] }}</option>
             {% endfor %}</select>
             </td>
         </tr>
